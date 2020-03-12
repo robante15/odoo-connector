@@ -16,12 +16,7 @@ import org.mindrot.jbcrypt.*;
  */
 public class Client {
 
-    public static String hashPassword(String password_plaintext) {
-        String salt = BCrypt.gensalt(12);
-        String hashed_password = BCrypt.hashpw(password_plaintext, salt);
-
-        return (hashed_password);
-    }
+    public static int a = 15;
 
     private static Factory factory;
 

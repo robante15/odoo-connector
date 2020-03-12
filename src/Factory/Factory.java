@@ -24,6 +24,10 @@ public class Factory {
         return new hr_applicant(id, campaign_id, source_id, medium_id, email_cc, message_main_attachment_id, name, active, description, email_from, probability, partner_id, create_date, stage_id, last_stage_id, company_id, user_id, date_closed, date_open, date_last_stage_update, priority, job_id, salary_proposed_extra, salary_expected_extra, salary_proposed, salary_expected, availability, partner_name, partner_phone, partner_mobile, type_id, department_id, delay_close, color, emp_id, kanban_state, create_uid, write_uid, write_date);
     }
 
+    public hr_job hr_job(int id, int message_main_attachment_id, String name, int expected_employees, int no_if_employee, int no_of_recruitment, int no_of_hired_employee, String description, String requirements, int department_id, String state, int create_uid, String create_date, int write_uid, String write_date, int address_id, int manager_id, int user_id, int hr_responsible_id, int alias_id, int color) {
+        return new hr_job(id, message_main_attachment_id, name, expected_employees, no_if_employee, no_of_recruitment, no_of_hired_employee, description, requirements, department_id, state, create_uid, create_date, write_uid, write_date, address_id, manager_id, user_id, hr_responsible_id, alias_id, color);
+    }
+
     /*----------------------CARGA DE LAS GUI-----------------------------*/
     public InicioSesion login() {
         return new InicioSesion();

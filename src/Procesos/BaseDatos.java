@@ -12,6 +12,7 @@ import Factory.Factory;
 
 //Import de entidades
 import Entidades.hr_applicant;
+import Entidades.hr_job;
 import org.mindrot.jbcrypt.BCrypt;
 
 /**
@@ -86,9 +87,7 @@ public class BaseDatos {
 
             while (rs.next()) {
                 String BD_usuario = rs.getString("usuario");
-                System.out.print(BD_usuario);
                 String BD_contra = rs.getString("contrasena");
-                System.out.print(BD_contra);
                 if (usuario.equals(BD_usuario) && checkPassword(contra, BD_contra)) {
                     aproved = true;
                 }
@@ -170,6 +169,55 @@ public class BaseDatos {
             }
         }
         return listaAspirantes;
+    }
+
+    public ArrayList<hr_job> obtenerTrabajosSolicitados() {
+        factory = new Factory();
+        ArrayList<hr_job> listaTrabajos = new ArrayList<hr_job>();
+        try {
+            conn = DriverManager.getConnection(jdbcOdoo, usernameOdoo, passwordOdoo);
+            String SQLQuery = "SELECT * FROM public.hr_job";
+            st = conn.prepareStatement(SQLQuery);
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+
+                int id = rs.getInt("id");
+                int message_main_attachment_id = rs.getInt("message_main_attachment_id");
+                String name = rs.getString("name");
+                int expected_employees = rs.getInt("expected_employees");
+                int no_if_employee = rs.getInt("no_if_employee");
+                int no_of_recruitment = rs.getInt("no_of_recruitment");
+                int no_of_hired_employee = rs.getInt("no_of_hired_employee");
+                String description = rs.getString("description");
+                String requirements = rs.getString("requirements");
+                int department_id = rs.getInt("department_id");
+                String state = rs.getString("state");
+                int create_uid = rs.getInt("create_uid");
+                String create_date = rs.getString("create_date"); // Reemplazar el tipo de dato
+                int write_uid = rs.getInt("write_uid");
+                String write_date = rs.getString("write_date");
+                int address_id = rs.getInt("address_id");
+                int manager_id = rs.getInt("manager_id");
+                int user_id = rs.getInt("user_id");
+                int hr_responsible_id = rs.getInt("hr_responsible_id");
+                int alias_id = rs.getInt("alias_id");
+                int color = rs.getInt("color");
+
+                hr_job trabajo = factory.hr_job(id, message_main_attachment_id, name, expected_employees, no_if_employee, no_of_recruitment, no_of_hired_employee, description, requirements, department_id, state, create_uid, create_date, write_uid, write_date, address_id, manager_id, user_id, hr_responsible_id, alias_id, color);
+                listaTrabajos.add(trabajo);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                st.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return listaTrabajos;
     }
 
 }
