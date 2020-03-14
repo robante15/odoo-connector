@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 public class Principal extends javax.swing.JFrame {
 
     private static Factory factory;
-
+    public static int ID;
     /**
      * Creates new form Principal
      */
@@ -27,6 +27,21 @@ public class Principal extends javax.swing.JFrame {
         factory = new Factory();
         this.setLocationRelativeTo(null);
         cargarColumnasTabla();
+        
+        String rol = factory.baseDatos().userRol;
+        
+        
+        BaseDatos BD = factory.baseDatos();
+        BD.obtenerAspirantes();
+        cargarModeloTabla();
+        
+        user_new.setVisible(false);
+        emp_new.setVisible(false);
+        
+        if(rol.equals("SUPER_ADMIN")){
+            user_new.setVisible(true);
+            emp_new.setVisible(true);
+        }
     }
 
     /**
@@ -49,6 +64,8 @@ public class Principal extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        user_new = new javax.swing.JMenuItem();
+        emp_new = new javax.swing.JMenuItem();
         mbtn_salir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
@@ -96,7 +113,7 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 453, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 456, Short.MAX_VALUE)
                 .addComponent(panel_infoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -110,7 +127,7 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        btn_cargarAspirantes.setText("Cargar Aspirantes");
+        btn_cargarAspirantes.setText("Recargar Aspirantes");
         btn_cargarAspirantes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_cargarAspirantesActionPerformed(evt);
@@ -118,6 +135,12 @@ public class Principal extends javax.swing.JFrame {
         });
 
         jTable1.setModel(modeloTabla);
+        jTable1.setDoubleBuffered(true);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -143,9 +166,25 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jMenu1.setText("Archivo");
+        jMenu1.setText("Opciones");
 
-        mbtn_salir.setText("Salir");
+        user_new.setText("Añadir Usuario");
+        user_new.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                user_newActionPerformed(evt);
+            }
+        });
+        jMenu1.add(user_new);
+
+        emp_new.setText("Añadir Empresa");
+        emp_new.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emp_newActionPerformed(evt);
+            }
+        });
+        jMenu1.add(emp_new);
+
+        mbtn_salir.setText("Salir del sistema");
         mbtn_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mbtn_salirActionPerformed(evt);
@@ -184,9 +223,30 @@ public class Principal extends javax.swing.JFrame {
         cargarModeloTabla();
     }//GEN-LAST:event_btn_cargarAspirantesActionPerformed
 
+    private void user_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_user_newActionPerformed
+        // TODO add your handling code here:
+        RegistroUsuario reg_usu = factory.reg_user();
+        reg_usu.setVisible(true);
+    }//GEN-LAST:event_user_newActionPerformed
+
+    private void emp_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emp_newActionPerformed
+        // TODO add your handling code here:
+        RegistroEmpresa reg_emp = factory.reg_empre();
+        reg_emp.setVisible(true);
+    }//GEN-LAST:event_emp_newActionPerformed
+
     private void mbtn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mbtn_salirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_mbtn_salirActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int selec = jTable1.rowAtPoint(evt.getPoint());
+        ID = (int) jTable1.getValueAt(selec, 0);
+        
+        InformacionEmpleado info_emple = factory.info_emple();
+        info_emple.setVisible(true);
+    }//GEN-LAST:event_jTable1MouseClicked
 
     DefaultTableModel modeloTabla = new DefaultTableModel();
 
@@ -213,12 +273,13 @@ public class Principal extends javax.swing.JFrame {
             String description = solicitante.getDescription();
             int job_id = solicitante.getJob_id();
             Double salary_expected = solicitante.getSalary_expected();
+            
 
             modeloTabla.setValueAt(id, i, 0);
             modeloTabla.setValueAt(partner_name, i, 1);
             modeloTabla.setValueAt(description, i, 2);
             modeloTabla.setValueAt(job_id, i, 3);
-            modeloTabla.setValueAt(salary_expected, i, 4);
+            modeloTabla.setValueAt(salary_expected, i, 4);   
         }
     }
 
@@ -259,6 +320,7 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cargarAspirantes;
+    public javax.swing.JMenuItem emp_new;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -271,5 +333,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_usuario;
     private javax.swing.JMenuItem mbtn_salir;
     private javax.swing.JPanel panel_infoUsuario;
+    public javax.swing.JMenuItem user_new;
     // End of variables declaration//GEN-END:variables
 }

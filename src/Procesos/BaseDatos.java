@@ -26,6 +26,8 @@ public class BaseDatos {
     Connection conn = null;
     PreparedStatement st = null;
     ResultSet rs = null;
+    
+    public static String userRol; //obtener el rol del usuario
 
     // BD de Odoo
     String urlOdoo = "localhost:5432";
@@ -81,15 +83,18 @@ public class BaseDatos {
         boolean aproved = false;
         try {
             conn = DriverManager.getConnection(jdbc, username, password);
-            String SQLQuery = "SELECT usuario, contrasena FROM public.usuarios WHERE usuario='" + usuario + "'";
+            String SQLQuery = "SELECT usuario, contrasena, rol FROM public.usuarios WHERE usuario='" + usuario + "'";
             st = conn.prepareStatement(SQLQuery);
             rs = st.executeQuery();
 
             while (rs.next()) {
                 String BD_usuario = rs.getString("usuario");
                 String BD_contra = rs.getString("contrasena");
+                userRol = rs.getString("rol");
                 if (usuario.equals(BD_usuario) && checkPassword(contra, BD_contra)) {
                     aproved = true;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Datos Incorrectos");
                 }
             }
         } catch (SQLException ex) {
@@ -103,7 +108,7 @@ public class BaseDatos {
         }
         return aproved;
     }
-
+    
     public ArrayList<hr_applicant> obtenerAspirantes() {
         factory = new Factory();
         ArrayList<hr_applicant> listaAspirantes = new ArrayList<hr_applicant>();

@@ -7,6 +7,7 @@ package GUI;
 
 import Procesos.BaseDatos;
 import Factory.Factory;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -142,8 +143,12 @@ public class InicioSesion extends javax.swing.JFrame {
         String contrasena = String.valueOf(this.txt_contrasena.getPassword());
         BaseDatos sesion = factory.baseDatos();
         boolean aprovada = sesion.ValidarLogin(Usuario, contrasena);
-        if (aprovada == true) {
-            System.out.println("Inicio de Sesión correcto");
+        
+        if(Usuario.equals("") && contrasena.equals("")){
+            JOptionPane.showMessageDialog(null, "No deje los campos vacios");
+        } else {
+            if (aprovada == true) {
+            System.out.println("Inicio de Sesión correcto" + "\n" + factory.baseDatos().userRol);
             Principal principal = factory.principal();
             principal.setVisible(true);
             this.setVisible(false);
@@ -156,6 +161,7 @@ public class InicioSesion extends javax.swing.JFrame {
                 principal.setVisible(true);
                 this.setVisible(false);
             }*/
+            }
         }
     }//GEN-LAST:event_btn_iniciarSesionActionPerformed
 

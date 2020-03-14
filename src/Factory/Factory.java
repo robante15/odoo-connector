@@ -36,4 +36,16 @@ public class Factory {
     public Principal principal() {
         return new Principal();
     }
+    
+    public RegistroUsuario reg_user (){
+        return new RegistroUsuario();
+    }
+    
+    public RegistroEmpresa reg_empre (){
+        return new RegistroEmpresa();
+    }
+    
+    public InformacionEmpleado info_emple(){
+        return new InformacionEmpleado();
+    }
 }
