@@ -7,16 +7,12 @@ package Cliente;
 
 import Factory.Factory;
 import GUI.InicioSesion;
-import Procesos.BaseDatos;
-import org.mindrot.jbcrypt.*;
 
 /**
  *
  * @author Usuario
  */
 public class Client {
-
-    public static int a = 15;
 
     private static Factory factory;
 
