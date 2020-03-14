@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Usuario
@@ -16,6 +18,7 @@ public class RegistroUsuario extends javax.swing.JFrame {
      */
     public RegistroUsuario() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -27,7 +30,6 @@ public class RegistroUsuario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lbl_title = new javax.swing.JLabel();
         lbl_nombre = new javax.swing.JLabel();
         lbl_apellidos = new javax.swing.JLabel();
         lbl_empresa = new javax.swing.JLabel();
@@ -48,10 +50,11 @@ public class RegistroUsuario extends javax.swing.JFrame {
         txt_nombres = new javax.swing.JTextField();
         btn_registrar = new javax.swing.JButton();
         btn_cancelar = new javax.swing.JButton();
+        panel_top = new javax.swing.JPanel();
+        lbl_title1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        lbl_title.setText("Registrar Usuario");
+        setTitle("Registrar Nuevo Usuario");
 
         lbl_nombre.setText("Nombres");
 
@@ -72,55 +75,85 @@ public class RegistroUsuario extends javax.swing.JFrame {
         lbl_rol.setText("Rol");
 
         btn_registrar.setText("Registrar");
+        btn_registrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_registrarActionPerformed(evt);
+            }
+        });
 
         btn_cancelar.setText("Cancelar");
+        btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelarActionPerformed(evt);
+            }
+        });
+
+        panel_top.setBackground(new java.awt.Color(41, 98, 255));
+
+        lbl_title1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lbl_title1.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_title1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_title1.setText("Registrar Usuario");
+
+        javax.swing.GroupLayout panel_topLayout = new javax.swing.GroupLayout(panel_top);
+        panel_top.setLayout(panel_topLayout);
+        panel_topLayout.setHorizontalGroup(
+            panel_topLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_topLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_title1)
+                .addGap(110, 110, 110))
+        );
+        panel_topLayout.setVerticalGroup(
+            panel_topLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_topLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(lbl_title1)
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(61, 61, 61)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lbl_codEmpleado)
-                                .addComponent(lbl_rol)
-                                .addComponent(lbl_telefono)
-                                .addComponent(lbl_correo)
-                                .addComponent(lbl_contrasena)
-                                .addComponent(lbl_usuario)
-                                .addComponent(lbl_empresa)
-                                .addComponent(lbl_apellidos)
-                                .addComponent(lbl_nombre))
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txt_nombres, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_empresa, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_correo, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_rol, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_codEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGap(74, 74, 74)
-                            .addComponent(btn_cancelar)
-                            .addGap(103, 103, 103)
-                            .addComponent(btn_registrar)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(161, 161, 161)
-                        .addComponent(lbl_title)))
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(69, 69, 69)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_codEmpleado)
+                            .addComponent(lbl_rol)
+                            .addComponent(lbl_telefono)
+                            .addComponent(lbl_correo)
+                            .addComponent(lbl_contrasena)
+                            .addComponent(lbl_usuario)
+                            .addComponent(lbl_empresa)
+                            .addComponent(lbl_apellidos)
+                            .addComponent(lbl_nombre))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_nombres, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_empresa, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_correo, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_rol, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_codEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(btn_cancelar)
+                        .addGap(61, 61, 61)
+                        .addComponent(btn_registrar)))
+                .addContainerGap(60, Short.MAX_VALUE))
+            .addComponent(panel_top, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbl_title)
-                .addGap(18, 18, 18)
+                .addComponent(panel_top, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_nombre)
                     .addComponent(txt_nombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -156,15 +189,39 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_rol)
                     .addComponent(txt_rol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_registrar)
-                    .addComponent(btn_cancelar))
-                .addGap(41, 41, 41))
+                    .addComponent(btn_cancelar)
+                    .addComponent(btn_registrar))
+                .addGap(20, 20, 20))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btn_cancelarActionPerformed
+
+    private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
+        // TODO add your handling code here:
+        String nombre = this.txt_nombres.getText();
+        String apellido = this.txt_apellidos.getText();
+        String empresa = this.txt_empresa.getText();
+        String user = this.txt_usuario.getText();
+        String pass = this.txt_contrasena.getText();
+        String correo = this.txt_correo.getText();
+        String tel = this.txt_telefono.getText();
+        String cod = this.txt_codEmpleado.getText();
+        String rol = this.txt_rol.getText();
+        
+        if(!nombre.equals("") && !apellido.equals("") && !empresa.equals("") && !user.equals("") && !pass.equals("")
+                && !correo.equals("") && !tel.equals("") && !cod.equals("") && !rol.equals("")){
+            JOptionPane.showMessageDialog(null, "Se agrego el usuario");
+        } else {
+            JOptionPane.showMessageDialog(null, "No deje los campos vacios");
+        }
+    }//GEN-LAST:event_btn_registrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -212,8 +269,9 @@ public class RegistroUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_nombre;
     private javax.swing.JLabel lbl_rol;
     private javax.swing.JLabel lbl_telefono;
-    private javax.swing.JLabel lbl_title;
+    private javax.swing.JLabel lbl_title1;
     private javax.swing.JLabel lbl_usuario;
+    private javax.swing.JPanel panel_top;
     private javax.swing.JTextField txt_apellidos;
     private javax.swing.JTextField txt_codEmpleado;
     private javax.swing.JTextField txt_contrasena;

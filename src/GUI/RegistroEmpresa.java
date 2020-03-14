@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Usuario
@@ -16,6 +18,7 @@ public class RegistroEmpresa extends javax.swing.JFrame {
      */
     public RegistroEmpresa() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -27,7 +30,6 @@ public class RegistroEmpresa extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lbl_title = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -52,10 +54,10 @@ public class RegistroEmpresa extends javax.swing.JFrame {
         txt_direccion = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        panel_top12 = new javax.swing.JPanel();
+        lbl_title13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        lbl_title.setText("Registrar Empresa");
 
         jLabel1.setText("Nombre de la Empresa");
 
@@ -86,8 +88,42 @@ public class RegistroEmpresa extends javax.swing.JFrame {
         jScrollPane2.setViewportView(txt_direccion);
 
         jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Registrar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        panel_top12.setBackground(new java.awt.Color(41, 98, 255));
+
+        lbl_title13.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lbl_title13.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_title13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl_title13.setText("Registrar Empresa");
+
+        javax.swing.GroupLayout panel_top12Layout = new javax.swing.GroupLayout(panel_top12);
+        panel_top12.setLayout(panel_top12Layout);
+        panel_top12Layout.setHorizontalGroup(
+            panel_top12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_top12Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_title13)
+                .addGap(110, 110, 110))
+        );
+        panel_top12Layout.setVerticalGroup(
+            panel_top12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_top12Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(lbl_title13)
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -96,8 +132,10 @@ public class RegistroEmpresa extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(149, 149, 149)
-                        .addComponent(lbl_title))
+                        .addGap(88, 88, 88)
+                        .addComponent(jButton1)
+                        .addGap(57, 57, 57)
+                        .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(56, 56, 56)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -108,53 +146,42 @@ public class RegistroEmpresa extends javax.swing.JFrame {
                                     .addComponent(txt_nombreEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel3)
-                                        .addComponent(jLabel2))
-                                    .addGap(18, 18, 18)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel3)
+                                                .addComponent(jLabel2))
+                                            .addGap(22, 22, 22))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(jLabel7)
+                                            .addGap(18, 18, 18)))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(txt_formaJuridica, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txt_fechaConstitucion, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addGap(29, 29, 29)
-                                        .addComponent(txt_numRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addGap(82, 82, 82)
-                                        .addComponent(txt_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(91, 91, 91)
-                                        .addComponent(txt_correo, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel9)
-                                            .addComponent(jLabel8)
-                                            .addComponent(jLabel7))
-                                        .addGap(22, 22, 22)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(txt_sectorActividad)
-                                            .addComponent(txt_dueno)
-                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(txt_fechaConstitucion, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txt_correo, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txt_numRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txt_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txt_dueno, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txt_sectorActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(38, 38, 38)
-                                .addComponent(jButton1)
-                                .addGap(54, 54, 54)
-                                .addComponent(jButton2)))))
-                .addContainerGap(165, Short.MAX_VALUE))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel9)
+                                        .addComponent(jLabel8)
+                                        .addComponent(jLabel10)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel5))
+                                    .addGap(207, 207, 207))
+                                .addComponent(jLabel4)))))
+                .addContainerGap(41, Short.MAX_VALUE))
+            .addComponent(panel_top12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbl_title)
-                .addGap(18, 18, 18)
+                .addComponent(panel_top12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txt_nombreEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -172,37 +199,69 @@ public class RegistroEmpresa extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txt_correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(txt_numRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_numRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(txt_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(txt_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txt_dueno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(txt_sectorActividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_sectorActividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(41, 41, 41))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(28, 28, 28))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String nombreEmpresa = this.txt_nombreEmpresa.getText();
+        String formaJuridica = this.txt_formaJuridica.getText();
+        String fecha = this.txt_fechaConstitucion.getText();
+        String direccion = this.txt_direccion.getText();
+        String correo = this.txt_correo.getText();
+        String numRegistro = this.txt_numRegistro.getText();
+        String tel = this.txt_telefono.getText();
+        String dueno = this.txt_dueno.getText();
+        String sector = this.txt_sectorActividad.getText();
+        String resumen = this.txt_resumenNegocio.getText();
+        
+        if(!nombreEmpresa.equals("") && !formaJuridica.equals("") && !fecha.equals("")  && !direccion.equals("")
+                && !correo.equals("") && !numRegistro.equals("") && !tel.equals("") && !dueno.equals("") && !sector.equals("") && !resumen.equals("")){
+            JOptionPane.showMessageDialog(null, "Se agrego con exito");
+        } else {
+            JOptionPane.showMessageDialog(null, "No deje los campos vacios");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -254,7 +313,8 @@ public class RegistroEmpresa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lbl_title;
+    private javax.swing.JLabel lbl_title13;
+    private javax.swing.JPanel panel_top12;
     private javax.swing.JTextField txt_correo;
     private javax.swing.JTextArea txt_direccion;
     private javax.swing.JTextField txt_dueno;
