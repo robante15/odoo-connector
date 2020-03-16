@@ -5,6 +5,7 @@
  */
 package Procesos;
 
+import Entidades.Usuario;
 import java.sql.*;
 import java.util.*;
 import javax.swing.*;
@@ -26,7 +27,7 @@ public class BaseDatos {
     Connection conn = null;
     PreparedStatement st = null;
     ResultSet rs = null;
-    
+
     public static String userRol; //obtener el rol del usuario
 
     // BD de Odoo
@@ -40,14 +41,14 @@ public class BaseDatos {
     String username = "postgres";
     String password = "B5ejuOkD4yCKLvAD";
 
-    public static String hashPassword(String password_plaintext) {
+    public String hashPassword(String password_plaintext) {
         String salt = BCrypt.gensalt(workload);
         String hashed_password = BCrypt.hashpw(password_plaintext, salt);
 
         return (hashed_password);
     }
 
-    public static boolean checkPassword(String password_plaintext, String stored_hash) {
+    public boolean checkPassword(String password_plaintext, String stored_hash) {
         boolean password_verified = false;
 
         if (null == stored_hash || !stored_hash.startsWith("$2a$")) {
@@ -108,7 +109,78 @@ public class BaseDatos {
         }
         return aproved;
     }
-    
+
+    public Usuario obtenerUsuarioByID(int _id) {
+        Usuario user = null;
+        factory = new Factory();
+        try {
+            conn = DriverManager.getConnection(jdbc, username, password);
+            String SQLQuery = "SELECT * FROM public.usuarios WHERE _id='" + _id + "'";
+            st = conn.prepareStatement(SQLQuery);
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("_id");
+                String nombres = rs.getString("nombres");
+                String apellidos = rs.getString("apellidos");
+                int empresa = rs.getInt("empresa");
+                String usuario = rs.getString("usuario");
+                String contrasena = rs.getString("contrasena");
+                String correo = rs.getString("correo");
+                int telefono = rs.getInt("telefono");
+                int codEmpleado = rs.getInt("codEmpleado");
+                String rol = rs.getString("rol");
+
+                user = factory.usuario(id, nombres, apellidos, empresa, usuario, contrasena, correo, telefono, codEmpleado, rol);
+
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                st.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return user;
+    }
+
+    public Usuario obtenerUsuarioByUser(String usuarioF) {
+        Usuario user = null;
+        factory = new Factory();
+        try {
+            conn = DriverManager.getConnection(jdbc, username, password);
+            String SQLQuery = "SELECT * FROM public.usuarios WHERE usuario='" + usuarioF + "'";
+            st = conn.prepareStatement(SQLQuery);
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                int _id = rs.getInt("_id");
+                String nombres = rs.getString("nombres");
+                String apellidos = rs.getString("apellidos");
+                int empresa = rs.getInt("empresa");
+                String usuario = rs.getString("usuario");
+                String contrasena = rs.getString("contrasena");
+                String correo = rs.getString("correo");
+                int telefono = rs.getInt("telefono");
+                int codEmpleado = rs.getInt("codEmpleado");
+                String rol = rs.getString("rol");
+
+                user = factory.usuario(_id, nombres, apellidos, empresa, usuario, contrasena, correo, telefono, codEmpleado, rol);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                st.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return user;
+    }
+
     public ArrayList<hr_applicant> obtenerAspirantes() {
         factory = new Factory();
         ArrayList<hr_applicant> listaAspirantes = new ArrayList<hr_applicant>();

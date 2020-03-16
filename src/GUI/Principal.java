@@ -5,9 +5,12 @@
  */
 package GUI;
 
+import Entidades.Empresa;
+import Entidades.Usuario;
 import Entidades.hr_applicant;
 import Factory.Factory;
 import Procesos.BaseDatos;
+import Procesos.EmpresaBD;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,28 +22,43 @@ public class Principal extends javax.swing.JFrame {
 
     private static Factory factory;
     public static int ID;
+    static Usuario user;
+    static Empresa empresa;
+
     /**
      * Creates new form Principal
+     *
+     * @param usuario
      */
-    public Principal() {
-        initComponents();
+    public Principal(Usuario usuario) {
+        user = usuario;
         factory = new Factory();
+        EmpresaBD EmpBD = factory.empresaBD();
+
+        empresa = EmpBD.obtenerEmpresaByID(usuario.getEmpresa());
+
+        initComponents();
         this.setLocationRelativeTo(null);
         cargarColumnasTabla();
-        
-        String rol = factory.baseDatos().userRol;
-        
-        
+
         BaseDatos BD = factory.baseDatos();
         BD.obtenerAspirantes();
         cargarModeloTabla();
-        
-        user_new.setVisible(false);
-        emp_new.setVisible(false);
-        
-        if(rol.equals("SUPER_ADMIN")){
-            user_new.setVisible(true);
-            emp_new.setVisible(true);
+
+        mbtn_nuevoUsuario.setVisible(false);
+        mbtn_nuevaEmpresa.setVisible(false);
+
+        this.lbl_usuario.setText(user.getNombres() + " " + user.getApellidos()
+                + " - " + user.getRol() + " - " + empresa.getNombre_empresa());
+
+        this.lbl_creditos.setText("Creditos base: " + empresa.getCreditos_base() + " Creditos extra: " + empresa.getCreditos_extra());
+
+        if (user.getRol().equals("SUPER_ADMIN")) {
+            mbtn_nuevoUsuario.setVisible(true);
+            mbtn_nuevoUsuario.setEnabled(true);
+
+            mbtn_nuevaEmpresa.setVisible(true);
+            mbtn_nuevaEmpresa.setEnabled(true);
         }
     }
 
@@ -62,14 +80,26 @@ public class Principal extends javax.swing.JFrame {
         btn_cargarAspirantes = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        panel_busqueda = new javax.swing.JPanel();
+        lbl_busqueda = new javax.swing.JLabel();
+        txt_busqueda = new javax.swing.JTextField();
+        btn_buscar = new javax.swing.JButton();
+        cbox_criterio = new javax.swing.JComboBox<>();
+        lbl_criterio = new javax.swing.JLabel();
+        tbtn_comprado = new javax.swing.JToggleButton();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        user_new = new javax.swing.JMenuItem();
-        emp_new = new javax.swing.JMenuItem();
+        menu_archivo = new javax.swing.JMenu();
+        mbtn_nuevoUsuario = new javax.swing.JMenuItem();
+        mbtn_nuevaEmpresa = new javax.swing.JMenuItem();
         mbtn_salir = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        menu_creditos = new javax.swing.JMenu();
+        mbtn_adminSuscripcion = new javax.swing.JMenuItem();
+        mbtn_agregarCreditos = new javax.swing.JMenuItem();
+        menu_ayuda = new javax.swing.JMenu();
+        mbtn_acercaDe = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("ProntoBPO - Perfiles Laborales");
 
         jPanel1.setBackground(new java.awt.Color(41, 98, 255));
 
@@ -80,30 +110,30 @@ public class Principal extends javax.swing.JFrame {
         panel_infoUsuario.setBackground(new java.awt.Color(41, 98, 255));
 
         lbl_usuario.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_usuario.setText("Usuario");
+        lbl_usuario.setText("Roberto Acevedo - Administrador - ProntoPBO");
 
         lbl_creditos.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_creditos.setText("Creditos Restantes");
+        lbl_creditos.setText("Creditos Restantes: 25");
 
         javax.swing.GroupLayout panel_infoUsuarioLayout = new javax.swing.GroupLayout(panel_infoUsuario);
         panel_infoUsuario.setLayout(panel_infoUsuarioLayout);
         panel_infoUsuarioLayout.setHorizontalGroup(
             panel_infoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_infoUsuarioLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_infoUsuarioLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panel_infoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbl_usuario)
                     .addComponent(lbl_creditos))
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addContainerGap())
         );
         panel_infoUsuarioLayout.setVerticalGroup(
             panel_infoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_infoUsuarioLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_infoUsuarioLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lbl_usuario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbl_creditos)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -111,23 +141,24 @@ public class Principal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 456, Short.MAX_VALUE)
-                .addComponent(panel_infoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panel_infoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(panel_infoUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel1)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        btn_cargarAspirantes.setText("Recargar Aspirantes");
+        btn_cargarAspirantes.setText("Cargar Aspirantes");
         btn_cargarAspirantes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_cargarAspirantesActionPerformed(evt);
@@ -143,6 +174,51 @@ public class Principal extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        panel_busqueda.setBackground(new java.awt.Color(255, 255, 255));
+
+        lbl_busqueda.setText("Buscar");
+
+        btn_buscar.setText("Buscar");
+
+        cbox_criterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Descripción", "Salario Esperado" }));
+
+        lbl_criterio.setText("Criterio de busqueda");
+
+        tbtn_comprado.setText("Comprado");
+
+        javax.swing.GroupLayout panel_busquedaLayout = new javax.swing.GroupLayout(panel_busqueda);
+        panel_busqueda.setLayout(panel_busquedaLayout);
+        panel_busquedaLayout.setHorizontalGroup(
+            panel_busquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_busquedaLayout.createSequentialGroup()
+                .addGap(0, 100, Short.MAX_VALUE)
+                .addGroup(panel_busquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_busqueda, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbl_criterio, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panel_busquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cbox_criterio, 0, 180, Short.MAX_VALUE)
+                    .addComponent(txt_busqueda))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panel_busquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btn_buscar)
+                    .addComponent(tbtn_comprado)))
+        );
+        panel_busquedaLayout.setVerticalGroup(
+            panel_busquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_busquedaLayout.createSequentialGroup()
+                .addGap(0, 13, Short.MAX_VALUE)
+                .addGroup(panel_busquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbox_criterio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tbtn_comprado)
+                    .addComponent(lbl_criterio))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panel_busquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_buscar)
+                    .addComponent(lbl_busqueda)))
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -150,52 +226,77 @@ public class Principal extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btn_cargarAspirantes)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panel_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btn_cargarAspirantes)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btn_cargarAspirantes)
+                    .addComponent(panel_busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jMenu1.setText("Opciones");
+        menu_archivo.setText("Archivo");
 
-        user_new.setText("Añadir Usuario");
-        user_new.addActionListener(new java.awt.event.ActionListener() {
+        mbtn_nuevoUsuario.setText("Añadir Usuario");
+        mbtn_nuevoUsuario.setEnabled(false);
+        mbtn_nuevoUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                user_newActionPerformed(evt);
+                mbtn_nuevoUsuarioActionPerformed(evt);
             }
         });
-        jMenu1.add(user_new);
+        menu_archivo.add(mbtn_nuevoUsuario);
 
-        emp_new.setText("Añadir Empresa");
-        emp_new.addActionListener(new java.awt.event.ActionListener() {
+        mbtn_nuevaEmpresa.setText("Añadir Empresa");
+        mbtn_nuevaEmpresa.setEnabled(false);
+        mbtn_nuevaEmpresa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emp_newActionPerformed(evt);
+                mbtn_nuevaEmpresaActionPerformed(evt);
             }
         });
-        jMenu1.add(emp_new);
+        menu_archivo.add(mbtn_nuevaEmpresa);
 
-        mbtn_salir.setText("Salir del sistema");
+        mbtn_salir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
+        mbtn_salir.setText("Salir");
         mbtn_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mbtn_salirActionPerformed(evt);
             }
         });
-        jMenu1.add(mbtn_salir);
+        menu_archivo.add(mbtn_salir);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(menu_archivo);
 
-        jMenu2.setText("Ayuda");
-        jMenuBar1.add(jMenu2);
+        menu_creditos.setText("Creditos");
+
+        mbtn_adminSuscripcion.setText("Administrar Suscripción");
+        menu_creditos.add(mbtn_adminSuscripcion);
+
+        mbtn_agregarCreditos.setText("Agregar Creditos");
+        mbtn_agregarCreditos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mbtn_agregarCreditosActionPerformed(evt);
+            }
+        });
+        menu_creditos.add(mbtn_agregarCreditos);
+
+        jMenuBar1.add(menu_creditos);
+
+        menu_ayuda.setText("Ayuda");
+
+        mbtn_acercaDe.setText("Acerca de");
+        menu_ayuda.add(mbtn_acercaDe);
+
+        jMenuBar1.add(menu_ayuda);
 
         setJMenuBar(jMenuBar1);
 
@@ -209,9 +310,9 @@ public class Principal extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -223,17 +324,17 @@ public class Principal extends javax.swing.JFrame {
         cargarModeloTabla();
     }//GEN-LAST:event_btn_cargarAspirantesActionPerformed
 
-    private void user_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_user_newActionPerformed
+    private void mbtn_nuevoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mbtn_nuevoUsuarioActionPerformed
         // TODO add your handling code here:
         RegistroUsuario reg_usu = factory.reg_user();
         reg_usu.setVisible(true);
-    }//GEN-LAST:event_user_newActionPerformed
+    }//GEN-LAST:event_mbtn_nuevoUsuarioActionPerformed
 
-    private void emp_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emp_newActionPerformed
+    private void mbtn_nuevaEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mbtn_nuevaEmpresaActionPerformed
         // TODO add your handling code here:
         RegistroEmpresa reg_emp = factory.reg_empre();
         reg_emp.setVisible(true);
-    }//GEN-LAST:event_emp_newActionPerformed
+    }//GEN-LAST:event_mbtn_nuevaEmpresaActionPerformed
 
     private void mbtn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mbtn_salirActionPerformed
         System.exit(0);
@@ -243,10 +344,15 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         int selec = jTable1.rowAtPoint(evt.getPoint());
         ID = (int) jTable1.getValueAt(selec, 0);
-        
-        InformacionEmpleado info_emple = factory.info_emple();
-        info_emple.setVisible(true);
+
+        PerfilSolicitud perfilSolicitud = factory.perfilSolicitud();
+        perfilSolicitud.setVisible(true);
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void mbtn_agregarCreditosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mbtn_agregarCreditosActionPerformed
+        CompraCreditos compraCreditos = factory.compraCreditos(empresa);
+        compraCreditos.setVisible(true);
+    }//GEN-LAST:event_mbtn_agregarCreditosActionPerformed
 
     DefaultTableModel modeloTabla = new DefaultTableModel();
 
@@ -273,13 +379,12 @@ public class Principal extends javax.swing.JFrame {
             String description = solicitante.getDescription();
             int job_id = solicitante.getJob_id();
             Double salary_expected = solicitante.getSalary_expected();
-            
 
             modeloTabla.setValueAt(id, i, 0);
             modeloTabla.setValueAt(partner_name, i, 1);
             modeloTabla.setValueAt(description, i, 2);
             modeloTabla.setValueAt(job_id, i, 3);
-            modeloTabla.setValueAt(salary_expected, i, 4);   
+            modeloTabla.setValueAt(salary_expected, i, 4);
         }
     }
 
@@ -313,26 +418,37 @@ public class Principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal().setVisible(true);
+                new Principal(user).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_cargarAspirantes;
-    public javax.swing.JMenuItem emp_new;
+    private javax.swing.JComboBox<String> cbox_criterio;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lbl_busqueda;
     private javax.swing.JLabel lbl_creditos;
+    private javax.swing.JLabel lbl_criterio;
     private javax.swing.JLabel lbl_usuario;
+    private javax.swing.JMenuItem mbtn_acercaDe;
+    private javax.swing.JMenuItem mbtn_adminSuscripcion;
+    private javax.swing.JMenuItem mbtn_agregarCreditos;
+    public javax.swing.JMenuItem mbtn_nuevaEmpresa;
+    public javax.swing.JMenuItem mbtn_nuevoUsuario;
     private javax.swing.JMenuItem mbtn_salir;
+    private javax.swing.JMenu menu_archivo;
+    private javax.swing.JMenu menu_ayuda;
+    private javax.swing.JMenu menu_creditos;
+    private javax.swing.JPanel panel_busqueda;
     private javax.swing.JPanel panel_infoUsuario;
-    public javax.swing.JMenuItem user_new;
+    private javax.swing.JToggleButton tbtn_comprado;
+    private javax.swing.JTextField txt_busqueda;
     // End of variables declaration//GEN-END:variables
 }

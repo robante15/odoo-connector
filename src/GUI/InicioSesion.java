@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import Entidades.Usuario;
 import Procesos.BaseDatos;
 import Factory.Factory;
 import javax.swing.JOptionPane;
@@ -14,7 +15,7 @@ import javax.swing.JOptionPane;
  * @author Usuario
  */
 public class InicioSesion extends javax.swing.JFrame {
-    
+
     private static Factory factory;
 
     /**
@@ -46,6 +47,7 @@ public class InicioSesion extends javax.swing.JFrame {
         lbl_usuario = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Iniciar Sesión");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panel_top.setBackground(new java.awt.Color(41, 98, 255));
@@ -60,16 +62,16 @@ public class InicioSesion extends javax.swing.JFrame {
         panel_topLayout.setHorizontalGroup(
             panel_topLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_topLayout.createSequentialGroup()
-                .addGap(98, 98, 98)
+                .addContainerGap()
                 .addComponent(lbl_title)
-                .addContainerGap(101, Short.MAX_VALUE))
+                .addContainerGap(189, Short.MAX_VALUE))
         );
         panel_topLayout.setVerticalGroup(
             panel_topLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_topLayout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
+                .addContainerGap(29, Short.MAX_VALUE)
                 .addComponent(lbl_title)
-                .addGap(24, 24, 24))
+                .addGap(27, 27, 27))
         );
 
         getContentPane().add(panel_top, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, -1));
@@ -100,20 +102,20 @@ public class InicioSesion extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(54, 54, 54)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbl_usuario)
+                    .addComponent(lbl_contrasena))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btn_iniciarSesion)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lbl_cancelar))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbl_usuario)
-                            .addComponent(lbl_contrasena))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txt_contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(txt_contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(58, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_cancelar)
+                .addGap(18, 18, 18)
+                .addComponent(btn_iniciarSesion)
+                .addGap(73, 73, 73))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,11 +128,11 @@ public class InicioSesion extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_contrasena)
                     .addComponent(txt_contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
+                .addGap(43, 43, 43)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_iniciarSesion)
-                    .addComponent(lbl_cancelar))
-                .addGap(54, 54, 54))
+                    .addComponent(lbl_cancelar)
+                    .addComponent(btn_iniciarSesion))
+                .addGap(49, 49, 49))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 78, 340, 230));
@@ -139,28 +141,21 @@ public class InicioSesion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_iniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_iniciarSesionActionPerformed
+        BaseDatos sesion = factory.baseDatos();
+
         String Usuario = this.txt_usuario.getText();
         String contrasena = String.valueOf(this.txt_contrasena.getPassword());
-        BaseDatos sesion = factory.baseDatos();
+
         boolean aprovada = sesion.ValidarLogin(Usuario, contrasena);
-        
-        if(Usuario.equals("") && contrasena.equals("")){
+
+        if (Usuario.equals("") && contrasena.equals("")) {
             JOptionPane.showMessageDialog(null, "No deje los campos vacios");
         } else {
             if (aprovada == true) {
-            System.out.println("Inicio de Sesión correcto" + "\n" + factory.baseDatos().userRol);
-            Principal principal = factory.principal();
-            principal.setVisible(true);
-            this.setVisible(false);
-            /*if (sesion.obtenerRol(Usuario).equals("Cliente")) {
-                GUICliente principal = factory.GUIprincipal(Usuario);
+                Usuario usuario = sesion.obtenerUsuarioByUser(Usuario);
+                Principal principal = factory.principal(usuario);
                 principal.setVisible(true);
                 this.setVisible(false);
-            } else {
-                GUIVendedor principal = factory.GUIvendedor(Usuario);
-                principal.setVisible(true);
-                this.setVisible(false);
-            }*/
             }
         }
     }//GEN-LAST:event_btn_iniciarSesionActionPerformed
