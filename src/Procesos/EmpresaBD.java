@@ -94,6 +94,33 @@ public class EmpresaBD {
         return flag;
     }
 
+    public int actualizarSuscripcion(int _id, String tipo_suscripcion, int cantidad_creditos) {
+        int resultado = 0;
+        try {
+            conn = DriverManager.getConnection(jdbc, username, password);
+            String SQLQuery = "UPDATE public.empresa SET tipo_suscripcion = '" + tipo_suscripcion + "', creditos_base = " + cantidad_creditos + " WHERE _id = " + _id;
+
+            // create the java mysql update preparedstatement
+            st = conn.prepareStatement(SQLQuery);
+            // execute the java preparedstatement
+            st.executeUpdate();
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al intentar almacenar la información:\n"
+                    + ex, "Error en la operación", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                if (st != null) {
+                    st.close();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error al intentar cerrar la conexión:\n"
+                        + ex, "Error en la operación", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return resultado;
+    }
+
     public ArrayList<Empresa> obtenerListadoByEmpresa() {
         factory = new Factory();
         ArrayList<Empresa> listadoEmpresas = new ArrayList<Empresa>();

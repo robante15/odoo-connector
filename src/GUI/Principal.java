@@ -8,10 +8,14 @@ package GUI;
 import Entidades.Empresa;
 import Entidades.Usuario;
 import Entidades.hr_applicant;
+import Entidades.informacion_bancaria;
 import Factory.Factory;
 import Procesos.BaseDatos;
 import Procesos.EmpresaBD;
+import Procesos.informacion_bancariaBD;
+import java.sql.Date;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 public class Principal extends javax.swing.JFrame {
 
     private static Factory factory;
+    static ArrayList<informacion_bancaria> listaTarjetas;
     public static int ID;
     static Usuario user;
     static Empresa empresa;
@@ -60,6 +65,21 @@ public class Principal extends javax.swing.JFrame {
             mbtn_nuevaEmpresa.setVisible(true);
             mbtn_nuevaEmpresa.setEnabled(true);
         }
+
+        cargarListadoTarjetas();
+
+    }
+
+    private void cargarListadoTarjetas() {
+        factory = new Factory();
+        informacion_bancariaBD infoB_BD = factory.informacion_bancariaBD();
+
+        listaTarjetas = infoB_BD.obtenerListadoByEmpresa(empresa.getId());
+        this.cbox_metodoPago.removeAllItems();
+        for (informacion_bancaria tarjeta : listaTarjetas) {
+            String tarjetaFormated = tarjeta.getTipo_tarjeta() + " - XXXX " + tarjeta.getNumero_tarjeta().substring(12);
+            this.cbox_metodoPago.addItem(tarjetaFormated);
+        }
     }
 
     /**
@@ -71,6 +91,17 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        frame_suscripcion = new javax.swing.JFrame();
+        jPanel3 = new javax.swing.JPanel();
+        lbl_title = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        cbox_tipoSus = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        cbox_metodoPago = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        btn_aceptarSus = new javax.swing.JButton();
+        btn_cancelarSus = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         panel_infoUsuario = new javax.swing.JPanel();
@@ -98,6 +129,121 @@ public class Principal extends javax.swing.JFrame {
         menu_ayuda = new javax.swing.JMenu();
         mbtn_acercaDe = new javax.swing.JMenuItem();
 
+        frame_suscripcion.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        frame_suscripcion.setTitle("Administrar Suscripción");
+        frame_suscripcion.setMinimumSize(new java.awt.Dimension(400, 300));
+
+        jPanel3.setBackground(new java.awt.Color(41, 98, 255));
+
+        lbl_title.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lbl_title.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_title.setText("Administrar Suscripción");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lbl_title)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(lbl_title)
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setForeground(new java.awt.Color(255, 255, 255));
+
+        jLabel2.setText("Tipo Suscripción");
+
+        cbox_tipoSus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Socio Básico", "Socio Preferencial", "Socio Gold", "Anular Suscripción" }));
+
+        jLabel3.setText("Método de Pago");
+
+        cbox_metodoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel4.setText("Total: $00.00 USD");
+
+        btn_aceptarSus.setText("Aceptar");
+        btn_aceptarSus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_aceptarSusActionPerformed(evt);
+            }
+        });
+
+        btn_cancelarSus.setText("Cancelar");
+        btn_cancelarSus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelarSusActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(136, 136, 136)
+                        .addComponent(jLabel4))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbox_tipoSus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbox_metodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(35, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_cancelarSus)
+                .addGap(100, 100, 100)
+                .addComponent(btn_aceptarSus)
+                .addGap(71, 71, 71))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(cbox_tipoSus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(cbox_metodoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_aceptarSus)
+                    .addComponent(btn_cancelarSus))
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout frame_suscripcionLayout = new javax.swing.GroupLayout(frame_suscripcion.getContentPane());
+        frame_suscripcion.getContentPane().setLayout(frame_suscripcionLayout);
+        frame_suscripcionLayout.setHorizontalGroup(
+            frame_suscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        frame_suscripcionLayout.setVerticalGroup(
+            frame_suscripcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(frame_suscripcionLayout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ProntoBPO - Perfiles Laborales");
 
@@ -119,12 +265,12 @@ public class Principal extends javax.swing.JFrame {
         panel_infoUsuario.setLayout(panel_infoUsuarioLayout);
         panel_infoUsuarioLayout.setHorizontalGroup(
             panel_infoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_infoUsuarioLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panel_infoUsuarioLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(panel_infoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbl_usuario)
                     .addComponent(lbl_creditos))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel_infoUsuarioLayout.setVerticalGroup(
             panel_infoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,7 +279,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(lbl_usuario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbl_creditos)
-                .addContainerGap())
+                .addGap(14, 14, 14))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -284,6 +430,11 @@ public class Principal extends javax.swing.JFrame {
         menu_creditos.setText("Creditos");
 
         mbtn_adminSuscripcion.setText("Administrar Suscripción");
+        mbtn_adminSuscripcion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mbtn_adminSuscripcionActionPerformed(evt);
+            }
+        });
         menu_creditos.add(mbtn_adminSuscripcion);
 
         mbtn_agregarCreditos.setText("Agregar Creditos");
@@ -349,9 +500,9 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         int selec = jTable1.rowAtPoint(evt.getPoint());
         int ID = jTable1.getSelectedRow();
-        
+
         System.out.print(ID);
-        
+
         PerfilSolicitud perfilSolicitud = factory.perfilSolicitud();
         perfilSolicitud.index = ID;
         perfilSolicitud.setVisible(true);
@@ -384,6 +535,58 @@ public class Principal extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btn_buscarActionPerformed
+
+    private void mbtn_adminSuscripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mbtn_adminSuscripcionActionPerformed
+        this.frame_suscripcion.setVisible(true);
+    }//GEN-LAST:event_mbtn_adminSuscripcionActionPerformed
+
+    private void btn_aceptarSusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceptarSusActionPerformed
+        int empresa_id = empresa.getId();
+        Date fecha_inicio;
+        Date fecha_final;
+        String tipo_suscripcion = "";
+        Double total;
+        int metodo_pago_id;
+        int cantidad_creditos = 0;
+
+        switch (this.cbox_tipoSus.getSelectedIndex()) {
+            case 0:
+                tipo_suscripcion = "BASIC_SUSCRIPTION";
+                cantidad_creditos = 75;
+                break;
+            case 1:
+                tipo_suscripcion = "PREFERENTIAL_SUSCRIPTION";
+                cantidad_creditos = 125;
+                break;
+            case 2:
+                tipo_suscripcion = "GOLD_SUSCRIPTION";
+                cantidad_creditos = 999999;
+                break;
+            case 3:
+                tipo_suscripcion = "NULA";
+                cantidad_creditos = 0;
+                break;
+            default:
+                break;
+        }
+
+        factory = new Factory();
+        EmpresaBD empresaBD = factory.empresaBD();
+
+        int consulta = empresaBD.actualizarSuscripcion(empresa_id, tipo_suscripcion, cantidad_creditos);
+
+        if (consulta != 1) {
+            JOptionPane.showMessageDialog(null, "Los datos se han guardado correctamente",
+                    "Éxito en la operación", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Los datos no se pudieron guardar\n"
+                    + "Inténtelo nuevamente", "Error en la operación", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_aceptarSusActionPerformed
+
+    private void btn_cancelarSusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarSusActionPerformed
+        this.frame_suscripcion.dispose();
+    }//GEN-LAST:event_btn_cancelarSusActionPerformed
 
     DefaultTableModel modeloTabla = new DefaultTableModel();
 
@@ -458,18 +661,29 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_aceptarSus;
     private javax.swing.JButton btn_buscar;
+    private javax.swing.JButton btn_cancelarSus;
     private javax.swing.JButton btn_cargarAspirantes;
     private javax.swing.JComboBox<String> cbox_criterio;
+    private javax.swing.JComboBox<String> cbox_metodoPago;
+    private javax.swing.JComboBox<String> cbox_tipoSus;
+    private javax.swing.JFrame frame_suscripcion;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbl_busqueda;
     private javax.swing.JLabel lbl_creditos;
     private javax.swing.JLabel lbl_criterio;
+    private javax.swing.JLabel lbl_title;
     private javax.swing.JLabel lbl_usuario;
     private javax.swing.JMenuItem mbtn_acercaDe;
     private javax.swing.JMenuItem mbtn_adminSuscripcion;
