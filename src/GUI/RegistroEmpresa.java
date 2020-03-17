@@ -5,6 +5,9 @@
  */
 package GUI;
 
+import Entidades.Empresa;
+import Factory.Factory;
+import Procesos.EmpresaBD;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,6 +15,8 @@ import javax.swing.JOptionPane;
  * @author Usuario
  */
 public class RegistroEmpresa extends javax.swing.JFrame {
+
+    private static Factory factory;
 
     /**
      * Creates new form RegistroEmpresa
@@ -33,21 +38,19 @@ public class RegistroEmpresa extends javax.swing.JFrame {
         panel_top12 = new javax.swing.JPanel();
         lbl_title13 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        lbl_nombreEmpresa = new javax.swing.JLabel();
+        lbl_formaJuridica = new javax.swing.JLabel();
+        lbl_fechaConstitucion = new javax.swing.JLabel();
+        lbl_direccion = new javax.swing.JLabel();
+        lbl_correo = new javax.swing.JLabel();
+        lbl_numRegistro = new javax.swing.JLabel();
+        lbl_resumenNegocio = new javax.swing.JLabel();
+        lbl_sectorActividad = new javax.swing.JLabel();
+        lbl_dueno = new javax.swing.JLabel();
+        lbl_telefono = new javax.swing.JLabel();
         txt_dueno = new javax.swing.JTextField();
         txt_sectorActividad = new javax.swing.JTextField();
-        txt_telefono = new javax.swing.JTextField();
         txt_numRegistro = new javax.swing.JTextField();
-        txt_fechaConstitucion = new javax.swing.JTextField();
         txt_correo = new javax.swing.JTextField();
         txt_formaJuridica = new javax.swing.JTextField();
         txt_nombreEmpresa = new javax.swing.JTextField();
@@ -55,10 +58,12 @@ public class RegistroEmpresa extends javax.swing.JFrame {
         txt_resumenNegocio = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         txt_direccion = new javax.swing.JTextArea();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btn_aceptar = new javax.swing.JButton();
+        btn_cancelar = new javax.swing.JButton();
+        txt_fechaConstitucion = new javax.swing.JFormattedTextField();
+        txt_telefono = new javax.swing.JFormattedTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         panel_top12.setBackground(new java.awt.Color(41, 98, 255));
 
@@ -86,25 +91,25 @@ public class RegistroEmpresa extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setText("Nombre de la Empresa");
+        lbl_nombreEmpresa.setText("Nombre de la Empresa");
 
-        jLabel2.setText("Forma Juridica");
+        lbl_formaJuridica.setText("Forma Juridica");
 
-        jLabel3.setText("Fecha de Constitución");
+        lbl_fechaConstitucion.setText("Fecha de Constitución");
 
-        jLabel4.setText("Dirección");
+        lbl_direccion.setText("Dirección");
 
-        jLabel5.setText("Correo");
+        lbl_correo.setText("Correo");
 
-        jLabel6.setText("Numero de Registro");
+        lbl_numRegistro.setText("Numero de Registro");
 
-        jLabel7.setText("Resumen del Negocio");
+        lbl_resumenNegocio.setText("Resumen del Negocio");
 
-        jLabel8.setText("Sector de Actividad");
+        lbl_sectorActividad.setText("Sector de Actividad");
 
-        jLabel9.setText("Dueño");
+        lbl_dueno.setText("Dueño");
 
-        jLabel10.setText("Telefono");
+        lbl_telefono.setText("Telefono");
 
         txt_resumenNegocio.setColumns(20);
         txt_resumenNegocio.setRows(3);
@@ -114,19 +119,28 @@ public class RegistroEmpresa extends javax.swing.JFrame {
         txt_direccion.setRows(3);
         jScrollPane2.setViewportView(txt_direccion);
 
-        jButton2.setText("Registrar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btn_aceptar.setText("Aceptar");
+        btn_aceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btn_aceptarActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Cancelar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_cancelar.setText("Cancelar");
+        btn_cancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_cancelarActionPerformed(evt);
             }
         });
+
+        txt_fechaConstitucion.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("d/MM/yyyy"))));
+        txt_fechaConstitucion.setText("DD/MM/YYYY");
+
+        try {
+            txt_telefono.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -135,100 +149,90 @@ public class RegistroEmpresa extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
-                        .addComponent(jButton1)
-                        .addGap(51, 51, 51)
-                        .addComponent(jButton2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel3)
-                                                .addComponent(jLabel2))
-                                            .addGap(22, 22, 22))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel7)
-                                            .addGap(18, 18, 18)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addGap(21, 21, 21)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txt_nombreEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_formaJuridica, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_fechaConstitucion, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_correo, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_numRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_dueno, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_sectorActividad, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel9)
-                                        .addComponent(jLabel8)
-                                        .addComponent(jLabel10)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jLabel5))
-                                    .addGap(207, 207, 207))
-                                .addComponent(jLabel4)))))
-                .addContainerGap(29, Short.MAX_VALUE))
+                                .addGap(30, 30, 30)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lbl_correo)
+                                    .addComponent(lbl_direccion)
+                                    .addComponent(lbl_numRegistro)
+                                    .addComponent(lbl_telefono)
+                                    .addComponent(lbl_dueno)
+                                    .addComponent(lbl_sectorActividad)
+                                    .addComponent(lbl_resumenNegocio)
+                                    .addComponent(lbl_fechaConstitucion)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lbl_nombreEmpresa)
+                                    .addComponent(lbl_formaJuridica))))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_nombreEmpresa)
+                            .addComponent(txt_formaJuridica)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                            .addComponent(txt_correo)
+                            .addComponent(txt_numRegistro)
+                            .addComponent(txt_dueno)
+                            .addComponent(txt_sectorActividad)
+                            .addComponent(jScrollPane1)
+                            .addComponent(txt_fechaConstitucion)
+                            .addComponent(txt_telefono)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(113, 113, 113)
+                        .addComponent(btn_cancelar)
+                        .addGap(51, 51, 51)
+                        .addComponent(btn_aceptar)))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(lbl_nombreEmpresa)
                     .addComponent(txt_nombreEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(lbl_formaJuridica)
                     .addComponent(txt_formaJuridica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                    .addComponent(lbl_fechaConstitucion)
                     .addComponent(txt_fechaConstitucion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
+                    .addComponent(lbl_direccion)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_correo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(lbl_correo))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_numRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                    .addComponent(lbl_numRegistro))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addGap(20, 20, 20)
+                    .addComponent(lbl_telefono)
+                    .addComponent(txt_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
+                    .addComponent(lbl_dueno)
                     .addComponent(txt_dueno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_sectorActividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
+                    .addComponent(lbl_sectorActividad))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel7)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                    .addComponent(lbl_resumenNegocio))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
-                .addContainerGap())
+                    .addComponent(btn_aceptar)
+                    .addComponent(btn_cancelar))
+                .addGap(18, 18, 18))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -236,7 +240,7 @@ public class RegistroEmpresa extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panel_top12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,12 +253,12 @@ public class RegistroEmpresa extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_cancelarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btn_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceptarActionPerformed
         // TODO add your handling code here:
         String nombreEmpresa = this.txt_nombreEmpresa.getText();
         String formaJuridica = this.txt_formaJuridica.getText();
@@ -262,18 +266,31 @@ public class RegistroEmpresa extends javax.swing.JFrame {
         String direccion = this.txt_direccion.getText();
         String correo = this.txt_correo.getText();
         String numRegistro = this.txt_numRegistro.getText();
-        String tel = this.txt_telefono.getText();
+        int tel = Integer.valueOf(this.txt_telefono.getText());
         String dueno = this.txt_dueno.getText();
         String sector = this.txt_sectorActividad.getText();
         String resumen = this.txt_resumenNegocio.getText();
-        
-        if(!nombreEmpresa.equals("") && !formaJuridica.equals("") && !fecha.equals("")  && !direccion.equals("")
-                && !correo.equals("") && !numRegistro.equals("") && !tel.equals("") && !dueno.equals("") && !sector.equals("") && !resumen.equals("")){
-            JOptionPane.showMessageDialog(null, "Se agrego con exito");
+
+        if (!nombreEmpresa.equals("") && !formaJuridica.equals("") && !fecha.equals("") && !direccion.equals("")
+                && !correo.equals("") && !numRegistro.equals("") && !this.txt_telefono.getText().equals("") && !dueno.equals("") && !sector.equals("") && !resumen.equals("")) {
+            factory = new Factory();
+            Empresa empresa = factory.empresa(0, nombreEmpresa, formaJuridica, fecha, direccion, correo, numRegistro, tel, dueno, sector, resumen, 0, 0, 0, "NULO");
+
+            EmpresaBD empresaBD = factory.empresaBD();
+
+            int consulta = empresaBD.registrarUsuarioNuevo(empresa);
+
+            if (consulta > 0) {
+                JOptionPane.showMessageDialog(null, "Los datos se han guardado correctamente",
+                        "Éxito en la operación", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Los datos no se pudieron guardar\n"
+                        + "Inténtelo nuevamente", "Error en la operación", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
             JOptionPane.showMessageDialog(null, "No deje los campos vacios");
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btn_aceptarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -311,32 +328,32 @@ public class RegistroEmpresa extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JButton btn_aceptar;
+    private javax.swing.JButton btn_cancelar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lbl_correo;
+    private javax.swing.JLabel lbl_direccion;
+    private javax.swing.JLabel lbl_dueno;
+    private javax.swing.JLabel lbl_fechaConstitucion;
+    private javax.swing.JLabel lbl_formaJuridica;
+    private javax.swing.JLabel lbl_nombreEmpresa;
+    private javax.swing.JLabel lbl_numRegistro;
+    private javax.swing.JLabel lbl_resumenNegocio;
+    private javax.swing.JLabel lbl_sectorActividad;
+    private javax.swing.JLabel lbl_telefono;
     private javax.swing.JLabel lbl_title13;
     private javax.swing.JPanel panel_top12;
     private javax.swing.JTextField txt_correo;
     private javax.swing.JTextArea txt_direccion;
     private javax.swing.JTextField txt_dueno;
-    private javax.swing.JTextField txt_fechaConstitucion;
+    private javax.swing.JFormattedTextField txt_fechaConstitucion;
     private javax.swing.JTextField txt_formaJuridica;
     private javax.swing.JTextField txt_nombreEmpresa;
     private javax.swing.JTextField txt_numRegistro;
     private javax.swing.JTextArea txt_resumenNegocio;
     private javax.swing.JTextField txt_sectorActividad;
-    private javax.swing.JTextField txt_telefono;
+    private javax.swing.JFormattedTextField txt_telefono;
     // End of variables declaration//GEN-END:variables
 }

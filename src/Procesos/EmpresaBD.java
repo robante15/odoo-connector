@@ -8,11 +8,13 @@ package Procesos;
 import Entidades.Empresa;
 import Factory.Factory;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -133,6 +135,51 @@ public class EmpresaBD {
             }
         }
         return listadoEmpresas;
+    }
+
+    public int registrarUsuarioNuevo(Empresa empresa) {
+        int resultado = 0;
+        try {
+            conn = DriverManager.getConnection(jdbc, username, password);
+            String SQLQuery = "INSERT INTO public.empresa (nombre_empresa, forma_juridica, "
+                    + "fecha_constitucion, direccion, correo, registro_legal, telefono, dueno,"
+                    + "sector_actividad, resumen_negocio, creditos_base, creditos_extra, informacion_bancaria, tipo_suscripcion) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            st = conn.prepareStatement(SQLQuery);
+
+            Date date = Date.valueOf(empresa.getFecha_constitucion());
+
+            //El setString sirve para saber que tipo de valor le va a pasar; el # sirve para saber de que posicion es, y lo otro es el valor que le va a pasar
+            st.setString(1, empresa.getNombre_empresa());
+            st.setString(2, empresa.getForma_juridica());
+            st.setDate(3, date);
+            st.setString(4, empresa.getDireccion());
+            st.setString(5, empresa.getCorreo());
+            st.setString(6, empresa.getRegistro_legal());
+            st.setInt(7, empresa.getTelefono());
+            st.setString(8, empresa.getDueno());
+            st.setString(9, empresa.getSector_actividad());
+            st.setString(10, empresa.getResumen_negocio());
+            st.setInt(11, empresa.getCreditos_base());
+            st.setInt(12, empresa.getCreditos_extra());
+            st.setInt(13, empresa.getInformacion_bancaria());
+            st.setString(14, empresa.getTipo_suscripcion());
+            resultado = st.executeUpdate();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al intentar almacenar la información:\n"
+                    + ex, "Error en la operación", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                if (st != null) {
+                    st.close();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error al intentar cerrar la conexión:\n"
+                        + ex, "Error en la operación", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return resultado;
     }
 
 }

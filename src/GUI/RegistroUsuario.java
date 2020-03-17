@@ -144,6 +144,11 @@ public class RegistroUsuario extends javax.swing.JFrame {
         cbox_empresa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btn_agregarEmpresa.setText("+");
+        btn_agregarEmpresa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_agregarEmpresaActionPerformed(evt);
+            }
+        });
 
         cbox_rol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dueño empresa", "Administrador empresa", "Recursos Humanos" }));
 
@@ -287,6 +292,11 @@ public class RegistroUsuario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No deje los campos vacios");
         }
     }//GEN-LAST:event_btn_registrarActionPerformed
+
+    private void btn_agregarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregarEmpresaActionPerformed
+        RegistroEmpresa reg_emp = factory.reg_empre();
+        reg_emp.setVisible(true);
+    }//GEN-LAST:event_btn_agregarEmpresaActionPerformed
 
     /**
      * @param args the command line arguments
