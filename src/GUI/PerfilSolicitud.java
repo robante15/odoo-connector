@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class PerfilSolicitud extends javax.swing.JFrame {
 
     private static Factory factory;
+    public int index;
 
     /**
      * Creates new form InformacionEmpleado
@@ -25,23 +26,25 @@ public class PerfilSolicitud extends javax.swing.JFrame {
         initComponents();
         factory = new Factory();
         this.setLocationRelativeTo(null);
-
+    }
+    
+    private void CargarInformacion(){
         BaseDatos BD = factory.baseDatos();
         BD.obtenerAspirantes();
         ArrayList<hr_applicant> listaAspirantes = BD.obtenerAspirantes();
-
-        /* hr_applicant solicitante = listaAspirantes.get(factory.principal().ID - 1);
-
+        
+        hr_applicant solicitante = listaAspirantes.get(index);
+        
         int id = solicitante.getId();
         int campaign_id = solicitante.getCampaign_id();
         int source_id = solicitante.getSource_id();
         int medium_id = solicitante.getMedium_id();
-        String email = solicitante.getEmail_cc();
-
+        String email_cc = solicitante.getEmail_cc();
         boolean activade = solicitante.isActive();
         String description = solicitante.getDescription();
-        String email_From = solicitante.getEmail_from();
-        Double pro = solicitante.getProbability();
+        String email_from = solicitante.getEmail_from();
+        String name = solicitante.getName();
+        Double probability = solicitante.getProbability();
         int partner_id = solicitante.getPartner_id();
         String create_date = solicitante.getCreate_date();
         int stage_id = solicitante.getStage_id();
@@ -53,28 +56,50 @@ public class PerfilSolicitud extends javax.swing.JFrame {
         String date_last_stage_update = solicitante.getDate_last_stage_update();
         String priority = solicitante.getPriority();
         int job_id = solicitante.getJob_id();
+        String salary_proposed_extra = solicitante.getSalary_proposed_extra();
+        String salary_expected_extra = solicitante.getSalary_expected_extra();
         Double salary_proposed = solicitante.getSalary_proposed();
         Double salary_expected = solicitante.getSalary_expected();
         String availability = solicitante.getAvailability();
         String partner_name = solicitante.getPartner_name();
+        String partner_phone = solicitante.getPartner_phone();
         String partner_mobile = solicitante.getPartner_mobile();
-        String partner_phone = solicitante.getPartner_phone(); */
-
-        /*this.nameLB.setText(partner_name);
-        this.desLB.setText(description);
-        this.sal_e.setText(salary_expected.toString());
-        this.sal_p.setText(salary_proposed.toString());
-        this.priLB.setText(priority);
-        this.proLB.setText(pro.toString());
-        this.actiLB.setText(String.valueOf(activade));
-        this.phoneLB.setText(partner_mobile);
-        this.numberLB.setText(partner_phone);
-        this.emailLB.setText(email);
-        this.dateCLB.setText(create_date);
-        this.avaLB.setText(availability);
-        this.messageLB.setText(date_last_stage_update);
-        this.jobIDLB.setText(String.valueOf(job_id));
-        this.solLB.setText(String.valueOf(id));*/
+        int department_id = solicitante.getPartner_id();
+        double delay_close = solicitante.getDelay_close();
+        int color = solicitante.getColor();
+        int emp_id = solicitante.getEmp_id();
+        String kanban_state = solicitante.getKanban_state();
+        int create_uid = solicitante.getCreate_uid();
+        int write_uid = solicitante.getWrite_uid();
+        String write_date = solicitante.getWrite_date();
+        
+        
+        this.jLabel1.setText(name);
+        this.jLabel2.setText(partner_name);
+        this.jLabel20.setText(email_from);
+        this.jLabel21.setText(create_date);
+        this.jLabel22.setText(partner_phone);
+        this.jLabel23.setText(partner_mobile);
+        this.jLabel25.setText(String.valueOf(job_id));
+        this.jLabel26.setText(String.valueOf(department_id));
+        this.jLabel27.setText(priority);
+        this.jLabel28.setText(String.valueOf(probability));
+        this.jLabel30.setText(salary_expected + " + " + salary_expected_extra);
+        this.jLabel31.setText(salary_proposed + " + " + salary_proposed_extra);
+        this.jLabel34.setText(availability);
+        
+        
+        this.jLabel33.setText(description);
+        
+        
+        /*System.out.print("\nid: " + id + "\n campaign_id: " + campaign_id + "\n source_id:" + source_id+ "\nmedium_id " + medium_id
+        + "\nemail_cc" + email_cc + "\nactivade: " + activade + "\nname" + name + "\ndescription: " + description + "\nemail_from" + email_from
+        + "\nprobability" + probability + "\npartner_id"+partner_id+ "\ncreate_date"+create_date+"\nstage_id"+stage_id+"\nlast_stage_id"+last_stage_id
+        + "\ncompany_id"+company_id+"\nuser_id"+user_id+"\ndate_closed"+date_closed+"\ndate_open"+date_open+"\ndate_last_stage_update"+date_last_stage_update
+        + "\npriority"+priority+"\njob_id"+job_id+"\nsalary_proposed_extra"+salary_proposed_extra+"\nsalary_expected_extra"+salary_expected_extra
+        + "\nsalary_proposed"+salary_proposed+"\nsalary_expected"+salary_expected+"\navailability"+availability+"\npartner_name"+partner_name+ "\npartner_phone"+partner_phone
+        + "\npartner_mobile"+ partner_mobile +"\ndepartment_id"+department_id+"\ndelay_close"+delay_close+"\ncolor"+ color+ "\nemp_id"+emp_id
+        + "\nkanban_state"+kanban_state + "\ncreate_uid"+create_uid+"\nwrite_uid"+write_uid+"\nwrite_date"+write_date);*/
     }
 
     /**
@@ -124,6 +149,7 @@ public class PerfilSolicitud extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
         btn_aceptar = new javax.swing.JButton();
@@ -359,6 +385,8 @@ public class PerfilSolicitud extends javax.swing.JFrame {
 
         jLabel31.setText("600,00 + Almuerzo");
 
+        jLabel34.setText("jLabel34");
+
         javax.swing.GroupLayout panel_contratoLayout = new javax.swing.GroupLayout(panel_contrato);
         panel_contrato.setLayout(panel_contratoLayout);
         panel_contratoLayout.setHorizontalGroup(
@@ -366,13 +394,14 @@ public class PerfilSolicitud extends javax.swing.JFrame {
             .addGroup(panel_contratoLayout.createSequentialGroup()
                 .addGroup(panel_contratoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel16)
-                    .addComponent(jLabel19)
                     .addGroup(panel_contratoLayout.createSequentialGroup()
                         .addGroup(panel_contratoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel17)
-                            .addComponent(jLabel18))
+                            .addComponent(jLabel18)
+                            .addComponent(jLabel19))
                         .addGap(41, 41, 41)
                         .addGroup(panel_contratoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel34)
                             .addComponent(jLabel31)
                             .addComponent(jLabel30))))
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -390,7 +419,9 @@ public class PerfilSolicitud extends javax.swing.JFrame {
                     .addComponent(jLabel18)
                     .addComponent(jLabel31))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel19)
+                .addGroup(panel_contratoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19)
+                    .addComponent(jLabel34))
                 .addGap(0, 0, 0))
         );
 
@@ -475,6 +506,7 @@ public class PerfilSolicitud extends javax.swing.JFrame {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
+        this.CargarInformacion();
     }//GEN-LAST:event_formWindowActivated
 
     private void formFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusLost
@@ -550,6 +582,7 @@ public class PerfilSolicitud extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

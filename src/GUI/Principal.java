@@ -348,9 +348,12 @@ public class Principal extends javax.swing.JFrame {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         int selec = jTable1.rowAtPoint(evt.getPoint());
-        ID = (int) jTable1.getValueAt(selec, 0);
-
+        int ID = jTable1.getSelectedRow();
+        
+        System.out.print(ID);
+        
         PerfilSolicitud perfilSolicitud = factory.perfilSolicitud();
+        perfilSolicitud.index = ID;
         perfilSolicitud.setVisible(true);
     }//GEN-LAST:event_jTable1MouseClicked
 
