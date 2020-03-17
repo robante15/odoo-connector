@@ -5,6 +5,13 @@
  */
 package GUI;
 
+import Entidades.Empresa;
+import Entidades.Usuario;
+import Factory.Factory;
+import Procesos.BaseDatos;
+import Procesos.EmpresaBD;
+import Procesos.usuarioBD;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,12 +20,30 @@ import javax.swing.JOptionPane;
  */
 public class RegistroUsuario extends javax.swing.JFrame {
 
+    private static Factory factory;
+    static ArrayList<Empresa> listadoEmpresas;
+
     /**
      * Creates new form RegistroUsuario
      */
     public RegistroUsuario() {
         initComponents();
         this.setLocationRelativeTo(null);
+        cargarListadoTarjetas();
+    }
+
+    private void cargarListadoTarjetas() {
+        factory = new Factory();
+        EmpresaBD empresa_BD = factory.empresaBD();
+
+        listadoEmpresas = empresa_BD.obtenerListadoByEmpresa();
+
+        this.cbox_empresa.removeAllItems();
+
+        for (Empresa empresa : listadoEmpresas) {
+            String empresaName = empresa.getNombre_empresa();
+            this.cbox_empresa.addItem(empresaName);
+        }
     }
 
     /**
@@ -33,7 +58,6 @@ public class RegistroUsuario extends javax.swing.JFrame {
         panel_top = new javax.swing.JPanel();
         lbl_title1 = new javax.swing.JLabel();
         panel_data = new javax.swing.JPanel();
-        txt_rol = new javax.swing.JTextField();
         lbl_rol = new javax.swing.JLabel();
         txt_codEmpleado = new javax.swing.JTextField();
         txt_telefono = new javax.swing.JTextField();
@@ -42,19 +66,21 @@ public class RegistroUsuario extends javax.swing.JFrame {
         txt_correo = new javax.swing.JTextField();
         lbl_correo = new javax.swing.JLabel();
         lbl_contrasena = new javax.swing.JLabel();
-        txt_contrasena = new javax.swing.JTextField();
         txt_usuario = new javax.swing.JTextField();
         lbl_usuario = new javax.swing.JLabel();
         lbl_empresa = new javax.swing.JLabel();
-        txt_empresa = new javax.swing.JTextField();
         txt_apellidos = new javax.swing.JTextField();
         lbl_apellidos = new javax.swing.JLabel();
         lbl_nombre = new javax.swing.JLabel();
         txt_nombres = new javax.swing.JTextField();
         btn_cancelar = new javax.swing.JButton();
         btn_registrar = new javax.swing.JButton();
+        cbox_empresa = new javax.swing.JComboBox<>();
+        btn_agregarEmpresa = new javax.swing.JButton();
+        cbox_rol = new javax.swing.JComboBox<>();
+        txt_passwd = new javax.swing.JPasswordField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registrar Nuevo Usuario");
 
         panel_top.setBackground(new java.awt.Color(41, 98, 255));
@@ -115,42 +141,52 @@ public class RegistroUsuario extends javax.swing.JFrame {
             }
         });
 
+        cbox_empresa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btn_agregarEmpresa.setText("+");
+
+        cbox_rol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dueño empresa", "Administrador empresa", "Recursos Humanos" }));
+
         javax.swing.GroupLayout panel_dataLayout = new javax.swing.GroupLayout(panel_data);
         panel_data.setLayout(panel_dataLayout);
         panel_dataLayout.setHorizontalGroup(
             panel_dataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_dataLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel_dataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbl_nombre)
+                    .addComponent(lbl_apellidos)
+                    .addComponent(lbl_empresa)
+                    .addComponent(lbl_usuario)
+                    .addComponent(lbl_contrasena)
+                    .addComponent(lbl_correo)
+                    .addComponent(lbl_telefono)
+                    .addComponent(lbl_codEmpleado)
+                    .addComponent(lbl_rol))
+                .addGap(18, 18, 18)
                 .addGroup(panel_dataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_dataLayout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addGroup(panel_dataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lbl_nombre)
-                            .addComponent(lbl_apellidos)
-                            .addComponent(lbl_empresa)
-                            .addComponent(lbl_usuario)
-                            .addComponent(lbl_contrasena)
-                            .addComponent(lbl_correo)
-                            .addComponent(lbl_telefono)
-                            .addComponent(lbl_codEmpleado)
-                            .addComponent(lbl_rol))
-                        .addGap(18, 18, 18)
-                        .addGroup(panel_dataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panel_dataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txt_contrasena)
-                                .addComponent(txt_usuario)
-                                .addComponent(txt_empresa)
-                                .addComponent(txt_nombres)
-                                .addComponent(txt_apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txt_correo, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_codEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_rol, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(panel_dataLayout.createSequentialGroup()
-                        .addGap(91, 91, 91)
                         .addComponent(btn_cancelar)
                         .addGap(56, 56, 56)
-                        .addComponent(btn_registrar)))
-                .addContainerGap(84, Short.MAX_VALUE))
+                        .addComponent(btn_registrar)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_dataLayout.createSequentialGroup()
+                        .addGroup(panel_dataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txt_passwd, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_dataLayout.createSequentialGroup()
+                                .addComponent(cbox_empresa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_agregarEmpresa))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_dataLayout.createSequentialGroup()
+                                .addComponent(txt_nombres, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txt_apellidos, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_usuario, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_correo, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_telefono, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_codEmpleado, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbox_rol, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(41, 41, 41))))
         );
         panel_dataLayout.setVerticalGroup(
             panel_dataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,16 +201,17 @@ public class RegistroUsuario extends javax.swing.JFrame {
                     .addComponent(lbl_apellidos))
                 .addGap(18, 18, 18)
                 .addGroup(panel_dataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_empresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_empresa))
+                    .addComponent(lbl_empresa)
+                    .addComponent(cbox_empresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_agregarEmpresa))
                 .addGap(18, 18, 18)
                 .addGroup(panel_dataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_usuario))
                 .addGap(18, 18, 18)
                 .addGroup(panel_dataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_contrasena))
+                    .addComponent(lbl_contrasena)
+                    .addComponent(txt_passwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(panel_dataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_correo)
@@ -190,12 +227,12 @@ public class RegistroUsuario extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(panel_dataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_rol)
-                    .addComponent(txt_rol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                    .addComponent(cbox_rol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(panel_dataLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_cancelar)
                     .addComponent(btn_registrar))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -221,20 +258,31 @@ public class RegistroUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
-        // TODO add your handling code here:
+        boolean flag = false;
         String nombre = this.txt_nombres.getText();
         String apellido = this.txt_apellidos.getText();
-        String empresa = this.txt_empresa.getText();
+        int empresa = listadoEmpresas.get(this.cbox_empresa.getSelectedIndex()).getId();
         String user = this.txt_usuario.getText();
-        String pass = this.txt_contrasena.getText();
         String correo = this.txt_correo.getText();
-        String tel = this.txt_telefono.getText();
-        String cod = this.txt_codEmpleado.getText();
-        String rol = this.txt_rol.getText();
-        
-        if(!nombre.equals("") && !apellido.equals("") && !empresa.equals("") && !user.equals("") && !pass.equals("")
-                && !correo.equals("") && !tel.equals("") && !cod.equals("") && !rol.equals("")){
-            JOptionPane.showMessageDialog(null, "Se agrego el usuario");
+        int tel = Integer.valueOf(this.txt_telefono.getText());
+        int cod = Integer.valueOf(this.txt_codEmpleado.getText());
+        String rol = this.cbox_rol.getSelectedItem().toString();
+
+        if (!nombre.equals("") && !apellido.equals("") && !user.equals("") && !String.valueOf(this.txt_passwd.getPassword()).equals("")
+                && !correo.equals("") && !this.txt_telefono.getText().equals("") && !this.txt_codEmpleado.getText().equals("")) {
+            factory = new Factory();
+            usuarioBD userBD = factory.usuarioBD();
+            BaseDatos bd = factory.baseDatos();
+            String pass = bd.hashPassword(String.valueOf(this.txt_passwd.getPassword()));
+            Usuario new_usuario = factory.usuario(0, nombre, apellido, empresa, user, pass, correo, tel, cod, rol);
+
+            flag = userBD.registrarUsuarioNuevo(new_usuario);
+
+            if (flag = true) {
+                JOptionPane.showMessageDialog(null, "Se ha registrado el usuario");
+            } else {
+                JOptionPane.showMessageDialog(null, "Hubo un error al registrar el usuario");
+            }
         } else {
             JOptionPane.showMessageDialog(null, "No deje los campos vacios");
         }
@@ -276,8 +324,11 @@ public class RegistroUsuario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_agregarEmpresa;
     private javax.swing.JButton btn_cancelar;
     private javax.swing.JButton btn_registrar;
+    private javax.swing.JComboBox<String> cbox_empresa;
+    private javax.swing.JComboBox<String> cbox_rol;
     private javax.swing.JLabel lbl_apellidos;
     private javax.swing.JLabel lbl_codEmpleado;
     private javax.swing.JLabel lbl_contrasena;
@@ -292,11 +343,9 @@ public class RegistroUsuario extends javax.swing.JFrame {
     private javax.swing.JPanel panel_top;
     private javax.swing.JTextField txt_apellidos;
     private javax.swing.JTextField txt_codEmpleado;
-    private javax.swing.JTextField txt_contrasena;
     private javax.swing.JTextField txt_correo;
-    private javax.swing.JTextField txt_empresa;
     private javax.swing.JTextField txt_nombres;
-    private javax.swing.JTextField txt_rol;
+    private javax.swing.JPasswordField txt_passwd;
     private javax.swing.JTextField txt_telefono;
     private javax.swing.JTextField txt_usuario;
     // End of variables declaration//GEN-END:variables

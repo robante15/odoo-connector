@@ -128,7 +128,7 @@ public class BaseDatos {
                 String contrasena = rs.getString("contrasena");
                 String correo = rs.getString("correo");
                 int telefono = rs.getInt("telefono");
-                int codEmpleado = rs.getInt("codEmpleado");
+                int codEmpleado = rs.getInt("cod_empleado");
                 String rol = rs.getString("rol");
 
                 user = factory.usuario(id, nombres, apellidos, empresa, usuario, contrasena, correo, telefono, codEmpleado, rol);
@@ -164,7 +164,7 @@ public class BaseDatos {
                 String contrasena = rs.getString("contrasena");
                 String correo = rs.getString("correo");
                 int telefono = rs.getInt("telefono");
-                int codEmpleado = rs.getInt("codEmpleado");
+                int codEmpleado = rs.getInt("cod_empleado");
                 String rol = rs.getString("rol");
 
                 user = factory.usuario(_id, nombres, apellidos, empresa, usuario, contrasena, correo, telefono, codEmpleado, rol);

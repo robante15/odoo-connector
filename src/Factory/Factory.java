@@ -11,6 +11,7 @@ import Procesos.EmpresaBD;
 import Entidades.*;
 import Procesos.historial_creditos_extraBD;
 import Procesos.informacion_bancariaBD;
+import Procesos.usuarioBD;
 
 import java.util.Date;
 
@@ -34,6 +35,10 @@ public class Factory {
 
     public historial_creditos_extraBD historial_creditos_extraBD() {
         return new historial_creditos_extraBD();
+    }
+
+    public usuarioBD usuarioBD() {
+        return new usuarioBD();
     }
 
     /*----------------------------ENTIDADES------------------------------*/

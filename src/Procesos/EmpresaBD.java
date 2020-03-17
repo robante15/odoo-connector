@@ -6,13 +6,13 @@
 package Procesos;
 
 import Entidades.Empresa;
-import Entidades.Usuario;
 import Factory.Factory;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -90,6 +90,49 @@ public class EmpresaBD {
         }
 
         return flag;
+    }
+
+    public ArrayList<Empresa> obtenerListadoByEmpresa() {
+        factory = new Factory();
+        ArrayList<Empresa> listadoEmpresas = new ArrayList<Empresa>();
+        try {
+            conn = DriverManager.getConnection(jdbc, username, password);
+            String SQLQuery = "SELECT * FROM public.empresa";
+            st = conn.prepareStatement(SQLQuery);
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+
+                int id = rs.getInt("_id");
+                String nombre_empresa = rs.getString("nombre_empresa");
+                String forma_juridica = rs.getString("forma_juridica");
+                String fecha_constitucion = rs.getString("fecha_constitucion");
+                String direccion = rs.getString("direccion");
+                String correo = rs.getString("correo");
+                String registro_legal = rs.getString("registro_legal");
+                int telefono = rs.getInt("telefono");
+                String dueno = rs.getString("dueno");
+                String sector_actividad = rs.getString("sector_actividad");
+                String resumen_negocio = rs.getString("resumen_negocio");
+                int creditos_base = rs.getInt("creditos_base");
+                int creditos_extra = rs.getInt("creditos_extra");
+                int informacion_bancaria = rs.getInt("informacion_bancaria");
+                String tipo_suscripcion = rs.getString("tipo_suscripcion");
+
+                Empresa empresaObj = factory.empresa(id, nombre_empresa, forma_juridica, fecha_constitucion, direccion, correo, registro_legal, telefono, dueno, sector_actividad, resumen_negocio, creditos_base, creditos_extra, informacion_bancaria, tipo_suscripcion);
+                listadoEmpresas.add(empresaObj);
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                st.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return listadoEmpresas;
     }
 
 }
