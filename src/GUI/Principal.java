@@ -179,6 +179,11 @@ public class Principal extends javax.swing.JFrame {
         lbl_busqueda.setText("Buscar");
 
         btn_buscar.setText("Buscar");
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
 
         cbox_criterio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nombre", "Descripción", "Salario Esperado" }));
 
@@ -354,6 +359,29 @@ public class Principal extends javax.swing.JFrame {
         compraCreditos.setVisible(true);
     }//GEN-LAST:event_mbtn_agregarCreditosActionPerformed
 
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        String busqueda = this.txt_busqueda.getText();
+
+        BaseDatos BD = factory.baseDatos();
+        int optionSelected = this.cbox_criterio.getSelectedIndex();
+
+        switch (optionSelected) {
+            case 0:
+                cargarListadoTabla(BD.buscarAspirantesByName(busqueda));
+                break;
+            case 1:
+                cargarListadoTabla(BD.buscarAspirantesByDescripcion(busqueda));
+                break;
+            case 2:
+                cargarListadoTabla(BD.buscarAspirantesBySalarioEsperado(Double.valueOf(busqueda)));
+                break;
+            default:
+            // code block
+        }
+
+
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
     DefaultTableModel modeloTabla = new DefaultTableModel();
 
     private void cargarColumnasTabla() {
@@ -366,8 +394,11 @@ public class Principal extends javax.swing.JFrame {
 
     private void cargarModeloTabla() {
         BaseDatos BD = factory.baseDatos();
-        BD.obtenerAspirantes();
-        ArrayList<hr_applicant> listaAspirantes = BD.obtenerAspirantes();
+        cargarListadoTabla(BD.obtenerAspirantes());
+
+    }
+
+    private void cargarListadoTabla(ArrayList<hr_applicant> listaAspirantes) {
         int cantidadAspirantes = listaAspirantes.size();
         modeloTabla.setNumRows(cantidadAspirantes);
 
